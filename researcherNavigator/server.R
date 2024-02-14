@@ -17,7 +17,7 @@ options(shiny.sanitize.errors = FALSE)
 
 # Define server logic
 server <- function(input, output, session) {
-#options(shiny.sanitize.errors = FALSE)
+  #options(shiny.sanitize.errors = FALSE)
   
   test <- FALSE
   global <- reactiveValues(response = FALSE)
@@ -27,11 +27,11 @@ server <- function(input, output, session) {
   observeEvent(input$code, {
     #message(input$file)
     fileResults <- file.path("output", input$code, "results.rds")
-    listResults <- readRDS(fileResults)
+    try(listResults <- readRDS(fileResults))
     
     
     fileRequest <- file.path("output", input$code, "request.rds")
-    request <- readRDS(fileRequest)
+    try(request <- readRDS(fileRequest))
     
     output$searchName <- renderText({
       request$term
@@ -57,15 +57,6 @@ server <- function(input, output, session) {
       DT::datatable(dt, escape = FALSE) # HERE
     })
   })
-  #initiate
-  
-#  YZJTHQLFCOOSECVIBBHIZYEDTKUEKIJAQHSQFAIRBYBPB
-  
-  
-  
-  
-  
-  
   
   
   
@@ -78,14 +69,17 @@ server <- function(input, output, session) {
       callbackR = function(x){
         global$response <- x
         if(x){
+          # MAIN REQUEST ---------------------------------------------
           Request(input)
         }
         #test <- x
       },
       text = paste("Your search is: '",
                    input$search,"'\n
+                   For email: ", input$email, "\n\n
     A search can often take more than 1 hour\n
-    An email will be sent when the search is completed.", sep=""),
+    An email will be sent when the search is completed with the code to access the results.\n
+    THEREFORE PLEASE MAKE SURE THE EMAIL IS CORRECT", sep=""),
       size = "s", 
       closeOnEsc = TRUE,
       closeOnClickOutside = FALSE,
@@ -127,61 +121,7 @@ server <- function(input, output, session) {
         animation = TRUE
       )
     }
-    # } else {
-    #   o$destroy()
-    # } 
   })
   
-  #})
-  
-  #  if(global$response){
-  # if(test){
-  #   shinyalert(
-  #     #https://daattali.com/shiny/shinyalert-demo/
-  #     title = "",
-  #     text = "",
-  #     size = "s", 
-  #     closeOnEsc = TRUE,
-  #     closeOnClickOutside = FALSE,
-  #     html = FALSE,
-  #     type = "success",
-  #     showConfirmButton = TRUE,
-  #     showCancelButton = TRUE,
-  #     confirmButtonText = "OK",
-  #     confirmButtonCol = "#AEDEF4",
-  #     timer = 0,
-  #     imageUrl = "",
-  #     animation = TRUE
-  #   )
-  # }
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  #print alert option selected to console
-  
-  
-  # observeEvent(input$shinyalert, 
-  #              value <- input$shinyalert)
-  # 
-  # print(input$shinyalert)
-  
-  
-  # Render the first plot based on selected dataset
-  # output$plot1 <- renderPlot({
-  #   # Plotting code for plot 1
-  #   plot(1:10, main = "Plot 1", xlab = "X", ylab = "Y")
-  # })
-  # 
-  # # Render the second plot based on selected dataset
-  # output$plot2 <- renderPlot({
-  #   # Plotting code for plot 2
-  #   plot(10:1, main = "Plot 2", xlab = "X", ylab = "Y")
-  # })
 }
 
