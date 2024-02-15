@@ -18,7 +18,7 @@ library(networkD3)
 library(webshot)
 library(htmlwidgets)
 source("basicFunctions.R")
-source("request.R")
+source("Request.R")
 
 
 # Define UI

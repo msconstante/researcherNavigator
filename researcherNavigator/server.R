@@ -12,7 +12,7 @@ library(networkD3)
 library(webshot)
 library(htmlwidgets)
 source("basicFunctions.R")
-source("request.R")
+source("Request.R")
 options(shiny.sanitize.errors = FALSE)
 
 # Define server logic
