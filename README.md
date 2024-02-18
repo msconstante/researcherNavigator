@@ -1,4 +1,6 @@
 Researcher Navigator can be used to get the landscape of who is publishing in a given research field.
+You can access it at:
+http://fuzzyowl.ca:3838
 
 It uses the search terms to pull the abstract data from Pubmed, and for a given search it checks the main authors publishing and how the abstract keywords differ from the remaining researchers.
 
