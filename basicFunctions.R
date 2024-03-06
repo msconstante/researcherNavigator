@@ -20,8 +20,8 @@ format_image <- function(path) {
   sprintf('<img src="%s" height="250px" width="250px"/>', path)
 }
 
-randomCode <- function(n = 1) {
-  a <- do.call(paste0, replicate(45, sample(LETTERS, n, TRUE), FALSE))
+randomCode <- function(n = 1, reps = 8) {
+  a <- do.call(paste0, replicate(reps, sample(LETTERS, n, TRUE), FALSE))
   #paste0(a, sprintf("%04d", sample(99999999, n, TRUE)), sample(LETTERS, n, TRUE))
   paste0(a)
 }

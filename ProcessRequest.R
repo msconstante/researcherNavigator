@@ -26,7 +26,7 @@ nAuthors <- 100
 
 #Extract forced authors ------
 
-if(length(force)>0){  
+if(force[1] != ""){  
   force <- strsplit(force, ",")[[1]]
   for(i in 1:length(force)){
     force[i] <- trimws(force[i])
@@ -35,9 +35,21 @@ if(length(force)>0){
 
 #Get PUBMED results ------
 search_results <- makeQuery(term, year, retmax)
-for(i in 1:length(force)){
-  termp <- paste(term, "AND", force[i], sep=" ")
-  search_results <- c(search_results, makeQuery(termp, year, retmax))
+if(length(search_results)==0){
+  filename <- paste(dirname, "/results.rds", sep="")
+  
+  toSave <- list(ter = term)
+  saveRDS(toSave, file = filename)
+  
+  myCodeErrorMail(term, code, email)
+  stop("Could not get results from query")
+}
+
+if(force[1] != ""){
+  for(i in 1:length(force)){
+    termp <- paste(term, "AND", force[i], sep=" ")
+    search_results <- c(search_results, makeQuery(termp, year, retmax))
+  }
 }
 search_results <- unique(search_results)
 files <- fetchSearchResults(search_results)
@@ -96,7 +108,7 @@ for (i in 1:length(figs)){
   #img <- "" #THIS SHOULD BE REMOVED IF img IS RUN
   imgs <- c(imgs, list(img[[2]]))
   names(imgs)[i] <- make.names(names(figs[i]))
-
+  
   # saveWidget(figs[[i]], paste(dirname, "/tmp.html", sep=""), selfcontained = F)
   # webshot(paste(dirname, "/tmp.html", sep=""),
   #         paste(dirname,"/", names(imgs)[i], ".jpg", sep=""),
@@ -112,9 +124,9 @@ Authors <- as.character(freqAuthors[, "Var1"])
 
 if(!(is.na(force[1]) || force[1]=="")){
   net <- MakeNetwork(df[["df"]], Authors = Authors, 
-                   mainAuthors = mainAuthors,
-                   forcedAuthors = freqAuthors[forcedAuthors, "Var1"], 
-                   collaborators = df[["collaborators"]])
+                     mainAuthors = mainAuthors,
+                     forcedAuthors = freqAuthors[forcedAuthors, "Var1"], 
+                     collaborators = df[["collaborators"]])
 } else {
   net <- MakeNetwork(df[["df"]], Authors = Authors, 
                      mainAuthors = mainAuthors,

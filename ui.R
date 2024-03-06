@@ -35,7 +35,7 @@ ui <- page_sidebar(
     
     
     #selection input with filenames from folder ./output
-    textInput("code", "Insert the code of the recent search to display (e.g. AAGYACPAXOQAAMBDABSFMGSENRMYCJXEYLHVLMOIACMHU)",
+    textInput("code", "Insert the code of the recent search to display (e.g. EGJLMLQF.2024.02.23.20.25.51.418766.SLWQEULU)",
               ""),
     
     # Make a text output with thename of the saearch

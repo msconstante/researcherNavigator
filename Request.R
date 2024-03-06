@@ -13,7 +13,7 @@ Request <- function(input) {
   
   
   #Request ------------------------------
-  code  <- randomCode()
+  code  <- make.names(paste(randomCode(), Sys.time(),randomCode()))
   dirname <- file.path("output", code)
   if(dir.exists(dirname)){
     stop("Random directory name exists")
